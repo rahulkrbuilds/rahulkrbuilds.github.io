@@ -3,44 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rahul Kumar | Interactive Portfolio</title>
+    <title>Rahul Kumar | Nature & Code</title>
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Fonts: 'Patrick Hand' for sketch feel, 'Inter' for clean reading -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+    <!-- Fonts: 'Patrick Hand' (Sketch), 'Fira Code' (CS/Tech), 'Inter' (Body) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Patrick+Hand&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     
     <style>
         /* --- THEME VARIABLES --- */
         :root {
-            /* Light Mode */
-            --bg-color: #fcfcfc;
-            --text-color: #2d3436;
-            --sidebar-bg: #f2f2f2;
-            --accent: #6c5ce7; /* Sublime Purple */
-            --accent-hover: #5649c0;
+            /* Light Mode (Daylight / Parchment) */
+            --bg-color: #f9f7f1; /* Warm Paper */
+            --dot-color: #e0e0e0; /* Graph Paper Grid */
+            --text-color: #2c3e50;
+            --sidebar-bg: #fdfcf8;
+            --accent: #2e7d32; /* Forest Green */
+            --accent-light: #81c784;
             --card-bg: #ffffff;
-            --border-color: #e0e0e0;
-            --shadow: 4px 4px 0px rgba(0,0,0,0.1); /* Sketchy Shadow */
-            --shadow-hover: 6px 6px 0px rgba(108, 92, 231, 0.2);
-            --path-color: #b2bec3;
-            --tag-bg: #eef2f3;
+            --border-color: #2c3e50; /* Sketchy Pen Color */
+            --shadow: 5px 5px 0px rgba(44, 62, 80, 0.1); /* Hard Sketch Shadow */
+            --shadow-hover: 8px 8px 0px rgba(46, 125, 50, 0.2);
+            --path-color: #a5d6a7;
+            --tag-bg: #e8f5e9;
+            
             --sketch-font: 'Patrick Hand', cursive;
+            --code-font: 'Fira Code', monospace;
             --body-font: 'Inter', sans-serif;
         }
 
         [data-theme="dark"] {
-            /* Dark Mode */
-            --bg-color: #1e1e2e;
-            --text-color: #dcdde1;
-            --sidebar-bg: #161622;
-            --accent: #a29bfe;
-            --accent-hover: #b8b2ff;
-            --card-bg: #2d2d44;
-            --border-color: #40405c;
-            --shadow: 4px 4px 0px rgba(0,0,0,0.3);
-            --shadow-hover: 6px 6px 0px rgba(162, 155, 254, 0.2);
-            --path-color: #57606f;
-            --tag-bg: #373752;
+            /* Dark Mode (Night Mode / IDE) */
+            --bg-color: #1e1e1e; /* VS Code-ish bg */
+            --dot-color: #333333;
+            --text-color: #d4d4d4;
+            --sidebar-bg: #252526;
+            --accent: #4caf50; /* Terminal Green */
+            --accent-light: #81c784;
+            --card-bg: #2d2d2d;
+            --border-color: #555555;
+            --shadow: 5px 5px 0px rgba(0,0,0,0.5);
+            --shadow-hover: 8px 8px 0px rgba(76, 175, 80, 0.3);
+            --path-color: #4caf50;
+            --tag-bg: #3c3c3c;
         }
 
         * { box-sizing: border-box; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
@@ -53,14 +57,17 @@
             display: flex;
             min-height: 100vh;
             overflow-x: hidden;
+            /* Graph Paper Background Effect */
+            background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
+            background-size: 20px 20px;
         }
 
         /* --- SIDEBAR --- */
         .sidebar {
-            width: 280px;
+            width: 300px;
             background: var(--sidebar-bg);
             border-right: 2px dashed var(--border-color);
-            padding: 30px 20px;
+            padding: 40px 25px;
             position: fixed;
             height: 100vh;
             display: flex;
@@ -68,84 +75,104 @@
             align-items: center;
             z-index: 100;
             overflow-y: auto;
+            box-shadow: 2px 0 15px rgba(0,0,0,0.05);
         }
 
+        /* Rectangular Polaroid Style Image */
         .profile-img-container {
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            padding: 5px;
-            border: 2px dashed var(--accent);
-            margin-bottom: 15px;
-            position: relative;
+            width: 160px;
+            height: 180px; /* Rectangular */
+            background: #fff;
+            padding: 10px 10px 40px 10px; /* Polaroid bottom padding */
+            border: 1px solid #ccc;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+            transform: rotate(-2deg); /* Casual tilt */
+            margin-bottom: 25px;
             flex-shrink: 0;
-            background: var(--card-bg);
+            transition: transform 0.3s;
         }
+        .profile-img-container:hover { transform: rotate(0deg) scale(1.02); }
 
         .profile-img {
             width: 100%;
             height: 100%;
-            border-radius: 50%;
             object-fit: cover;
+            border: 1px solid #eee;
         }
 
-        h1 { font-family: var(--sketch-font); font-size: 2rem; margin: 0; color: var(--accent); text-align: center; line-height: 1; }
-        .role { font-size: 0.85rem; color: var(--text-color); opacity: 0.8; text-align: center; margin-bottom: 20px; font-weight: 300; margin-top: 5px; }
+        /* Handwritten decorative pin */
+        .profile-img-container::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 15px;
+            height: 15px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        h1 { font-family: var(--sketch-font); font-size: 2.2rem; margin: 0; color: var(--accent); text-align: center; line-height: 1.1; }
+        .role { font-family: var(--code-font); font-size: 0.8rem; color: var(--text-color); opacity: 0.8; text-align: center; margin-bottom: 30px; margin-top: 8px; border-top: 1px dashed var(--border-color); padding-top: 10px; width: 100%; }
 
         /* Navigation Buttons */
-        .nav-menu { width: 100%; display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+        .nav-menu { width: 100%; display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px; }
         .nav-btn {
-            background: none;
-            border: none;
+            background: transparent;
+            border: 2px solid transparent;
             width: 100%;
-            padding: 12px 15px;
+            padding: 10px 15px;
             text-align: left;
             font-family: var(--sketch-font);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: var(--text-color);
             cursor: pointer;
-            border-radius: 12px;
+            border-radius: 8px; /* Organic-ish */
             display: flex;
             align-items: center;
-            gap: 12px;
-            opacity: 0.7;
+            gap: 15px;
+            opacity: 0.8;
             transition: all 0.2s;
         }
 
         .nav-btn:hover, .nav-btn.active { 
-            background-color: var(--card-bg); 
+            border-color: var(--accent);
             color: var(--accent); 
             opacity: 1;
-            box-shadow: var(--shadow);
-            transform: translateX(5px);
+            background: var(--tag-bg);
+            transform: skewX(-2deg); /* Sketch feel */
         }
 
-        .contact-row { display: flex; gap: 10px; margin-top: auto; margin-bottom: 15px; }
-        .contact-icon { color: var(--text-color); font-size: 1.2rem; opacity: 0.6; transition: 0.2s; }
-        .contact-icon:hover { color: var(--accent); opacity: 1; transform: scale(1.1); }
+        .contact-row { display: flex; gap: 15px; margin-top: auto; margin-bottom: 20px; }
+        .contact-icon { color: var(--text-color); font-size: 1.3rem; opacity: 0.6; transition: 0.2s; position: relative; }
+        .contact-icon:hover { color: var(--accent); opacity: 1; bottom: 3px; }
 
         .cv-btn {
-            background-color: var(--accent);
-            color: #fff !important; /* Force white text */
-            padding: 10px 20px;
-            border-radius: 30px;
+            background-color: var(--text-color);
+            color: var(--bg-color) !important;
+            padding: 12px 25px;
+            border-radius: 2px; /* Brutalist/Tech */
             text-decoration: none;
+            font-family: var(--code-font);
             font-weight: 600;
-            font-size: 0.9rem;
-            box-shadow: 0 4px 10px rgba(108, 92, 231, 0.4);
+            font-size: 0.85rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
             width: 100%;
-            transition: transform 0.2s;
+            border: 2px solid var(--text-color);
+            transition: 0.2s;
+            position: relative;
         }
-        .cv-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(108, 92, 231, 0.5); }
+        .cv-btn:hover { background-color: var(--accent); border-color: var(--accent); color: white !important; }
 
         /* --- MAIN CONTENT --- */
         .main {
-            margin-left: 280px;
-            padding: 40px 60px;
+            margin-left: 300px;
+            padding: 50px 80px;
             flex: 1;
             position: relative;
         }
@@ -153,141 +180,282 @@
         /* --- THEME TOGGLE --- */
         .theme-toggle {
             position: fixed;
-            top: 20px;
+            top: 25px;
             right: 30px;
             background: var(--card-bg);
             border: 2px solid var(--border-color);
             width: 45px;
             height: 45px;
-            border-radius: 50%;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: var(--shadow);
-            font-size: 1.1rem;
+            box-shadow: 3px 3px 0px var(--border-color);
+            font-size: 1.2rem;
             color: var(--text-color);
             z-index: 200;
+            transition: 0.2s;
         }
+        .theme-toggle:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px var(--border-color); }
 
-        /* --- SECTIONS ANIMATION --- */
-        .section { display: none; opacity: 0; animation: fadeIn 0.4s forwards; }
+        /* --- SECTIONS --- */
+        .section { display: none; opacity: 0; animation: fadeIn 0.5s forwards; }
         .section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --- HEADINGS --- */
         h2 { 
             font-family: var(--sketch-font); 
-            font-size: 2.4rem; 
-            margin-bottom: 25px; 
-            color: var(--accent);
+            font-size: 3rem; 
+            margin-bottom: 30px; 
+            color: var(--text-color);
             display: inline-block;
-            border-bottom: 3px solid var(--border-color);
+            position: relative;
+        }
+        /* Underline looking like a drawn leaf/stem */
+        h2::after {
+            content: '';
+            display: block;
+            width: 60%;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 0 50% 50% 50%;
+            margin-top: -5px;
         }
 
         /* --- ABOUT SECTION --- */
         .hero-box {
             background: var(--card-bg);
             border: 2px solid var(--border-color);
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: var(--shadow);
-            margin-bottom: 40px;
-        }
-        .hero-text { font-size: 1.05rem; line-height: 1.8; margin-bottom: 15px; }
-        .interest-bubbles { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px; }
-        .bubble {
-            background: var(--tag-bg);
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-family: var(--sketch-font);
-            font-size: 1.1rem;
-            border: 1px dashed var(--accent);
-            color: var(--text-color);
-            cursor: default;
-            transition: 0.3s;
-        }
-        .bubble:hover { background: var(--accent); color: white; border-style: solid; transform: rotate(-2deg) scale(1.05); }
-
-        /* --- SKILLS SECTION --- */
-        .skill-category { margin-bottom: 30px; }
-        .skill-title { font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; font-size: 1.1rem; }
-        .skill-title i { color: var(--accent); }
-        .skill-grid { display: flex; flex-wrap: wrap; gap: 10px; }
-        .skill-tag {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 8px 15px;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            box-shadow: 2px 2px 0px rgba(0,0,0,0.05);
-            transition: 0.2s;
-        }
-        .skill-tag:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow); color: var(--accent); }
-
-        /* --- JOURNEY (Animated Map) --- */
-        .journey-map { position: relative; max-width: 800px; margin-left: 10px; border-left: 3px dashed var(--path-color); padding-left: 40px; }
-        .node-card {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 12px;
-            border: 2px solid var(--border-color);
+            /* Irregular organic border radius */
+            border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+            padding: 40px;
             box-shadow: var(--shadow);
             margin-bottom: 40px;
             position: relative;
+        }
+        .hero-text { font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px; }
+        
+        .interest-bubbles { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 25px; }
+        .bubble {
+            background: var(--card-bg);
+            padding: 10px 20px;
+            /* Organic shapes */
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            font-family: var(--sketch-font);
+            font-size: 1.2rem;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            cursor: default;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .bubble:nth-child(even) { border-radius: 70% 30% 30% 70% / 60% 40% 60% 40%; }
+        .bubble:hover { background: var(--accent); color: white; transform: scale(1.1) rotate(2deg); }
+
+        /* --- SKILLS SECTION --- */
+        .skill-category { margin-bottom: 40px; }
+        .skill-title { 
+            font-family: var(--sketch-font); 
+            font-size: 1.5rem; 
+            font-weight: 700; 
+            margin-bottom: 15px; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            color: var(--accent);
+        }
+        .skill-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+        .skill-tag {
+            font-family: var(--code-font); /* Tech Vibe */
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+            transition: 0.2s;
+            position: relative;
+        }
+        .skill-tag::before { content: '<'; color: var(--accent); opacity: 0.5; margin-right: 5px; }
+        .skill-tag::after { content: '/>'; color: var(--accent); opacity: 0.5; margin-left: 5px; }
+        .skill-tag:hover { transform: translateY(-3px); box-shadow: 4px 4px 0px var(--accent); border-color: var(--accent); }
+
+        /* --- JOURNEY (Vine/Circuit Map) --- */
+        .journey-map { 
+            position: relative; 
+            max-width: 800px; 
+            margin-left: 20px; 
+            /* A vine-like green line */
+            border-left: 4px solid var(--path-color); 
+            padding-left: 50px; 
+        }
+        .journey-map::after {
+            /* Terminal end of the vine */
+            content: 'END;';
+            position: absolute;
+            bottom: -30px;
+            left: -20px;
+            font-family: var(--code-font);
+            font-size: 0.8rem;
+            color: var(--path-color);
+            background: var(--bg-color);
+            padding: 2px 5px;
+        }
+
+        .node-card {
+            background: var(--card-bg);
+            padding: 25px;
+            /* Tech Card shape */
+            border-radius: 4px;
+            border: 2px solid var(--border-color);
+            box-shadow: var(--shadow);
+            margin-bottom: 50px;
+            position: relative;
             transition: 0.3s;
         }
-        .node-card:hover { transform: translateX(5px); box-shadow: var(--shadow-hover); border-color: var(--accent); }
+        /* Leaf decoration on cards */
+        .node-card::after {
+            content: '\f06c'; /* Leaf icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            top: -15px;
+            right: -10px;
+            font-size: 1.5rem;
+            color: var(--accent);
+            transform: rotate(30deg);
+        }
+
+        .node-card:hover { transform: translate(-3px, -3px); box-shadow: var(--shadow-hover); border-color: var(--accent); }
+        
         .node-point {
-            position: absolute; left: -54px; top: 20px; width: 24px; height: 24px;
-            background: var(--bg-color); border: 3px solid var(--accent); border-radius: 50%;
+            position: absolute; 
+            left: -64px; 
+            top: 25px; 
+            width: 24px; 
+            height: 24px;
+            background: var(--bg-color); 
+            border: 3px solid var(--accent); 
+            border-radius: 50%;
             z-index: 2;
         }
-        .node-header img { width: 40px; height: 40px; object-fit: contain; border-radius: 4px; background: white; border: 1px solid #eee; margin-right: 15px; }
-        .node-title { font-family: var(--sketch-font); font-size: 1.4rem; margin: 0; }
-        .node-date { font-size: 0.8rem; color: var(--accent); font-weight: 700; text-transform: uppercase; }
-        .node-desc { font-size: 0.95rem; margin-top: 10px; opacity: 0.9; }
+        /* Connector line looking like a branch */
+        .node-point::after {
+            content: '';
+            position: absolute;
+            width: 36px;
+            height: 2px;
+            background: var(--path-color);
+            left: 20px;
+            top: 8px;
+        }
+
+        .node-header { display: flex; align-items: center; margin-bottom: 10px; }
+        .node-header img { width: 45px; height: 45px; object-fit: contain; border-radius: 6px; background: white; border: 1px solid #eee; margin-right: 15px; padding: 2px; }
+        .node-title { font-family: var(--sketch-font); font-size: 1.6rem; margin: 0; color: var(--text-color); }
+        .node-date { font-family: var(--code-font); font-size: 0.75rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .node-desc { font-size: 1rem; margin-top: 10px; opacity: 0.9; line-height: 1.6; }
 
         /* --- PAPERS (Filterable) --- */
-        .filter-bar { margin-bottom: 25px; display: flex; gap: 10px; flex-wrap: wrap; }
+        .filter-bar { margin-bottom: 30px; display: flex; gap: 15px; flex-wrap: wrap; }
         .filter-btn {
-            background: var(--card-bg); border: 1px solid var(--border-color);
-            padding: 6px 14px; border-radius: 20px; cursor: pointer;
-            font-family: var(--sketch-font); font-size: 1.1rem;
-            color: var(--text-color); transition: 0.2s;
+            background: transparent; 
+            border: 2px dashed var(--border-color);
+            padding: 8px 20px; 
+            border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; /* Organic */
+            cursor: pointer;
+            font-family: var(--sketch-font); 
+            font-size: 1.2rem;
+            color: var(--text-color); 
+            transition: 0.2s;
         }
-        .filter-btn:hover, .filter-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+        .filter-btn:hover, .filter-btn.active { background: var(--accent); color: white; border-color: var(--accent); border-style: solid; }
         
-        .pub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .pub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
         .pub-card {
-            background: var(--card-bg); border: 2px solid var(--border-color);
-            border-radius: 12px; padding: 20px; box-shadow: var(--shadow);
+            background: var(--card-bg); 
+            border: 2px solid var(--border-color);
+            border-radius: 8px; 
+            padding: 25px; 
+            box-shadow: var(--shadow);
             display: flex; flex-direction: column; height: 100%; transition: 0.3s;
+            position: relative;
+            overflow: hidden;
         }
-        .pub-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); border-color: var(--accent); }
-        .pub-tag { font-size: 0.75rem; background: var(--tag-bg); padding: 3px 8px; border-radius: 4px; display: inline-block; margin-bottom: 8px; color: var(--accent); font-weight: 600; }
+        .pub-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); border-color: var(--accent); }
+        
+        /* Top border color bar */
+        .pub-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 6px;
+            background: var(--accent);
+            opacity: 0.7;
+        }
+
+        .pub-tag { 
+            font-family: var(--code-font);
+            font-size: 0.7rem; 
+            background: var(--tag-bg); 
+            padding: 4px 10px; 
+            border-radius: 4px; 
+            display: inline-block; 
+            margin-bottom: 12px; 
+            color: var(--accent); 
+            font-weight: 600; 
+            border: 1px solid transparent;
+        }
+        .pub-card:hover .pub-tag { border-color: var(--accent); background: #fff; }
 
         /* --- AWARDS (Trophy Shelf) --- */
-        .award-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .award-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
         .award-card {
-            background: var(--card-bg); border: 1px solid var(--border-color);
-            padding: 20px; border-radius: 12px; text-align: center;
-            box-shadow: var(--shadow); transition: 0.3s;
+            background: var(--card-bg); 
+            border: 2px solid var(--border-color);
+            padding: 25px; 
+            border-radius: 12px; 
+            text-align: center;
+            box-shadow: var(--shadow); 
+            transition: 0.3s;
+            position: relative;
         }
-        .award-card:hover { transform: translateY(-3px); border-color: var(--accent); }
-        .award-icon { font-size: 2rem; color: #f1c40f; margin-bottom: 10px; }
-        .award-title { font-weight: 700; margin-bottom: 5px; }
-        .award-date { font-size: 0.8rem; opacity: 0.6; }
+        /* Award ribbon sketch */
+        .award-card::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 10px;
+            background: rgba(0,0,0,0.1);
+            border-radius: 50%;
+        }
+
+        .award-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+        .award-icon { font-size: 2.5rem; color: #f1c40f; margin-bottom: 15px; text-shadow: 2px 2px 0px rgba(0,0,0,0.1); }
+        .award-title { font-family: var(--sketch-font); font-weight: 700; font-size: 1.3rem; margin-bottom: 5px; }
+        .award-date { font-family: var(--code-font); font-size: 0.75rem; opacity: 0.7; }
 
         /* Mobile */
-        @media (max-width: 850px) {
+        @media (max-width: 900px) {
             body { flex-direction: column; }
-            .sidebar { width: 100%; height: auto; position: relative; border-right: none; border-bottom: 2px dashed var(--border-color); padding: 20px; }
-            .main { margin-left: 0; padding: 20px; }
-            .nav-menu { flex-direction: row; overflow-x: auto; padding-bottom: 5px; }
-            .nav-btn { width: auto; white-space: nowrap; font-size: 1rem; }
-            .journey-map { margin-left: 0; padding-left: 20px; border-left-width: 2px; }
-            .node-point { left: -32px; width: 20px; height: 20px; top: 22px; }
+            .sidebar { width: 100%; height: auto; position: relative; border-right: none; border-bottom: 2px dashed var(--border-color); padding: 30px 20px; flex-direction: row; flex-wrap: wrap; justify-content: space-between; }
+            .profile-img-container { width: 100px; height: 120px; margin: 0; padding: 5px 5px 25px 5px; }
+            .nav-menu { width: 100%; flex-direction: row; overflow-x: auto; padding-bottom: 10px; margin-top: 20px; }
+            .nav-btn { width: auto; white-space: nowrap; font-size: 1.1rem; }
+            .contact-row { display: none; } /* Hide on mobile to save space */
+            .cv-btn { width: auto; }
+            .main { margin-left: 0; padding: 30px 20px; }
+            .journey-map { margin-left: 0; padding-left: 30px; border-left-width: 3px; }
+            .node-point { left: -43px; width: 22px; height: 22px; top: 22px; }
+            .node-point::after { width: 25px; left: 18px; }
+            .theme-toggle { top: 20px; right: 20px; }
         }
     </style>
 </head>
@@ -295,23 +463,26 @@
 
     <!-- THEME TOGGLE -->
     <button class="theme-toggle" onclick="toggleTheme()" title="Switch Theme">
-        <i class="fas fa-moon"></i>
+        <i class="fas fa-adjust"></i>
     </button>
 
     <!-- SIDEBAR -->
     <nav class="sidebar">
+        <!-- RECTANGULAR POLAROID IMAGE -->
         <div class="profile-img-container">
             <!-- Replace with profile.jpg -->
-            <img src="profile.jpg" alt="Rahul" class="profile-img" onerror="this.src='https://ui-avatars.com/api/?name=Rahul+Kumar&background=a29bfe&color=fff&size=200'">
+            <img src="profile.jpg" alt="Rahul" class="profile-img" onerror="this.src='https://ui-avatars.com/api/?name=Rahul+Kumar&background=2e7d32&color=fff&size=200'">
         </div>
         
-        <h1>Rahul Kumar</h1>
-        <p class="role">Sr. AI Engineer | Researcher</p>
+        <div style="text-align: center; width: 100%;">
+            <h1>Rahul Kumar</h1>
+            <p class="role">&lt;Sr. AI Engineer /&gt;</p>
+        </div>
 
         <div class="nav-menu">
-            <button class="nav-btn active" onclick="showSection('home')"><i class="fas fa-user-circle"></i> About Me</button>
-            <button class="nav-btn" onclick="showSection('skills')"><i class="fas fa-tools"></i> Skills</button>
-            <button class="nav-btn" onclick="showSection('journey')"><i class="fas fa-map-signs"></i> Journey</button>
+            <button class="nav-btn active" onclick="showSection('home')"><i class="fas fa-user-astronaut"></i> About</button>
+            <button class="nav-btn" onclick="showSection('skills')"><i class="fas fa-terminal"></i> Skills</button>
+            <button class="nav-btn" onclick="showSection('journey')"><i class="fas fa-code-branch"></i> Journey</button>
             <button class="nav-btn" onclick="showSection('papers')"><i class="fas fa-scroll"></i> Research</button>
             <button class="nav-btn" onclick="showSection('awards')"><i class="fas fa-trophy"></i> Awards</button>
         </div>
@@ -341,22 +512,22 @@
                 <p class="hero-text">
                     I specialize in <strong>LLMs, RAG, and ranking systems</strong>, having fine-tuned PEFT-based LLaMA models for real-world multilingual deployments. Earlier, I contributed to deep learning solutions for cardiac risk stratification and designed secure, adaptive systems for AI-powered network security.
                 </p>
-                <p class="hero-text" style="font-style: italic; opacity: 0.8; border-top: 1px solid var(--border-color); padding-top: 15px;">
+                <p class="hero-text" style="font-family: var(--sketch-font); font-size: 1.3rem; color: var(--accent); margin-top: 20px;">
                     "I thrive in collaborative environments where ideas evolve into elegant, empathetic solutions. One neural network at a time."
                 </p>
             </div>
 
-            <h3 style="font-family: var(--sketch-font); color: var(--accent); margin-top: 30px;">My Interest Bubble</h3>
+            <h3 style="font-family: var(--sketch-font); font-size: 1.8rem; margin-top: 30px;">Interest Ecosystem</h3>
             <div class="interest-bubbles">
                 <span class="bubble"><i class="fas fa-brain"></i> Psychology</span>
                 <span class="bubble"><i class="fas fa-robot"></i> AI/ML</span>
-                <span class="bubble"><i class="fas fa-book-open"></i> Reading Books</span>
+                <span class="bubble"><i class="fas fa-book-open"></i> Reading</span>
                 <span class="bubble"><i class="fas fa-running"></i> Running</span>
-                <span class="bubble"><i class="fas fa-laptop-code"></i> Computer Science</span>
+                <span class="bubble"><i class="fas fa-laptop-code"></i> Comp Sci</span>
             </div>
             
-            <div class="hero-box" style="margin-top: 30px; background: var(--tag-bg);">
-                <h4 style="margin: 0 0 10px 0;">Volunteer Experience</h4>
+            <div class="hero-box" style="margin-top: 30px; background: var(--tag-bg); border-style: dashed;">
+                <h4 style="margin: 0 0 10px 0; font-family: var(--sketch-font);">Volunteer Experience</h4>
                 <p style="margin: 0; font-size: 0.95rem;">
                     <strong>MoSahay (NGO):</strong> Developed a web portal (MEAN Stack) to connect job seekers and employees, especially for migrant laborers during critical shortages.
                 </p>
@@ -367,7 +538,7 @@
         <!-- SECTION: SKILLS -->
         <section id="skills" class="section">
             <h2>Technical Arsenal</h2>
-            <p style="margin-bottom: 30px; opacity: 0.8;">A breakdown of my technical proficiency from academic roots to production scale.</p>
+            <p style="margin-bottom: 30px; opacity: 0.8; font-family: var(--code-font);">// Proficiency: Academic -> Production Scale</p>
 
             <div class="skill-category">
                 <div class="skill-title"><i class="fas fa-code"></i> Languages</div>
@@ -434,7 +605,7 @@
                 <!-- STOP 1 -->
                 <div class="node-card">
                     <div class="node-point"></div>
-                    <div class="node-header" style="display: flex; align-items: center;">
+                    <div class="node-header">
                         <img src="makro.png" onerror="this.style.display='none'">
                         <div>
                             <h3 class="node-title">Makro Pro</h3>
@@ -449,7 +620,7 @@
                 <!-- STOP 2 -->
                 <div class="node-card">
                     <div class="node-point"></div>
-                    <div class="node-header" style="display: flex; align-items: center;">
+                    <div class="node-header">
                         <img src="ge.png" onerror="this.style.display='none'">
                         <div>
                             <h3 class="node-title">GE HealthCare</h3>
@@ -464,7 +635,7 @@
                 <!-- STOP 3 -->
                 <div class="node-card">
                     <div class="node-point"></div>
-                    <div class="node-header" style="display: flex; align-items: center;">
+                    <div class="node-header">
                         <img src="vasitars.png" onerror="this.style.display='none'">
                         <div>
                             <h3 class="node-title">Vasitars (Founder)</h3>
@@ -479,7 +650,7 @@
                 <!-- STOP 4 -->
                 <div class="node-card">
                     <div class="node-point"></div>
-                    <div class="node-header" style="display: flex; align-items: center;">
+                    <div class="node-header">
                         <img src="iit.png" onerror="this.style.display='none'">
                         <div>
                             <h3 class="node-title">IIT Bhubaneswar</h3>
@@ -497,7 +668,7 @@
         <!-- SECTION: PAPERS -->
         <section id="papers" class="section">
             <h2>Research Library</h2>
-            <p style="margin-bottom: 20px;">10 Papers | 500+ Citations | 10k+ Reads</p>
+            <p style="margin-bottom: 20px; font-family: var(--code-font);">10 Papers | 500+ Citations | 10k+ Reads</p>
             
             <div class="filter-bar">
                 <button class="filter-btn active" onclick="filterPapers('all')">All</button>
@@ -512,7 +683,7 @@
                     <span class="pub-tag">NLP / E-Commerce</span>
                     <h4 style="margin: 0 0 10px 0;">A Hybrid LLM Process for Multi-Objective Reranking</h4>
                     <p style="font-size: 0.9rem; flex-grow: 1;">ACM RecSys '25 (Patent Pending). Hybrid LLM process for multi-objective reranking in e-commerce.</p>
-                    <small>Patent Filing: 2501004476</small>
+                    <small style="font-family: var(--code-font); opacity: 0.7;">Patent: 2501004476</small>
                 </div>
 
                 <!-- 2. NLP -->
@@ -520,7 +691,7 @@
                     <span class="pub-tag">NLP / Algorithms</span>
                     <h4 style="margin: 0 0 10px 0;">Multilingual Phonetic BK-Tree Based Spelling Correction</h4>
                     <p style="font-size: 0.9rem; flex-grow: 1;">ACM RecSys '25 (Patent Pending). Real-time multilingual query correction process in e-commerce.</p>
-                    <small>Patent Filing: 2501004419</small>
+                    <small style="font-family: var(--code-font); opacity: 0.7;">Patent: 2501004419</small>
                 </div>
 
                 <!-- 3. Medical -->
@@ -645,12 +816,11 @@
             const icon = document.querySelector('.theme-toggle i');
             if (body.getAttribute('data-theme') === 'dark') {
                 body.removeAttribute('data-theme');
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
+                icon.classList.remove('fa-adjust');
+                icon.classList.add('fa-moon'); // Or reset to adjust depending on logic
             } else {
                 body.setAttribute('data-theme', 'dark');
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
+                icon.classList.remove('fa-adjust'); // Logic can be improved
             }
         }
 
