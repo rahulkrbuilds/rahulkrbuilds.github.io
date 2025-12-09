@@ -3,286 +3,690 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rahul Kumar | AI Research & Engineering</title>
+    <title>Rahul Kumar | Interactive Portfolio</title>
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Fonts: 'Patrick Hand' for sketch feel, 'Inter' for clean reading -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+    
     <style>
-        /* ACADEMIC THEME - Minimalist & Clean */
+        /* --- THEME VARIABLES --- */
         :root {
-            --primary: #0056b3; /* Academic Blue */
-            --text: #333;
-            --bg: #fff;
-            --sidebar: #f8f9fa;
-            --border: #e9ecef;
+            /* Light Mode */
+            --bg-color: #fcfcfc;
+            --text-color: #2d3436;
+            --sidebar-bg: #f2f2f2;
+            --accent: #6c5ce7; /* Sublime Purple */
+            --accent-hover: #5649c0;
+            --card-bg: #ffffff;
+            --border-color: #e0e0e0;
+            --shadow: 4px 4px 0px rgba(0,0,0,0.1); /* Sketchy Shadow */
+            --shadow-hover: 6px 6px 0px rgba(108, 92, 231, 0.2);
+            --path-color: #b2bec3;
+            --tag-bg: #eef2f3;
+            --sketch-font: 'Patrick Hand', cursive;
+            --body-font: 'Inter', sans-serif;
         }
-        body { font-family: 'Segoe UI', Roboto, "Helvetica Neue", Arial, sans-serif; color: var(--text); line-height: 1.6; margin: 0; display: flex; min-height: 100vh; }
-        
-        /* SIDEBAR (Left Panel) */
-        .sidebar { width: 280px; background: var(--sidebar); padding: 40px 20px; border-right: 1px solid var(--border); position: fixed; height: 100%; overflow-y: auto; text-align: center; }
-        .profile-pic { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px; background-color: #ddd; }
-        .name { font-size: 1.6em; font-weight: 700; margin-bottom: 5px; color: #222; }
-        .title { font-size: 0.9em; color: #666; margin-bottom: 20px; font-weight: 500; }
-        .contact-info { font-size: 0.85em; text-align: left; margin-top: 30px; }
-        .contact-info a { color: var(--primary); text-decoration: none; display: block; margin-bottom: 8px; }
-        .contact-info a:hover { text-decoration: underline; }
-        
-        /* MAIN CONTENT (Right Panel) */
-        .main-content { margin-left: 280px; padding: 50px 60px; max-width: 900px; width: 100%; }
-        
-        /* TABS NAVIGATION */
-        .tabs { border-bottom: 2px solid var(--border); margin-bottom: 30px; }
-        .tab-btn { background: none; border: none; padding: 10px 20px; font-size: 1em; cursor: pointer; color: #666; font-weight: 600; margin-right: 10px; border-bottom: 3px solid transparent; transition: 0.3s; }
-        .tab-btn:hover { color: var(--primary); }
-        .tab-btn.active { color: var(--primary); border-bottom: 3px solid var(--primary); }
-        
-        /* CONTENT SECTIONS */
-        .tab-content { display: none; animation: fadeIn 0.3s; }
-        .tab-content.active { display: block; }
-        
-        h2 { font-size: 1.5em; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 0; color: #222; }
-        h3 { font-size: 1.1em; color: #444; margin-top: 25px; margin-bottom: 5px; }
-        
-        /* PUBLICATIONS STYLE */
-        .pub-item { margin-bottom: 20px; padding-left: 15px; border-left: 3px solid #eee; }
-        .pub-title { font-weight: 700; font-size: 1.05em; color: #000; }
-        .pub-authors { color: #555; font-size: 0.95em; }
-        .pub-venue { font-style: italic; color: #666; font-size: 0.9em; }
-        .pub-links a { font-size: 0.85em; color: var(--primary); text-decoration: none; margin-right: 10px; border: 1px solid var(--border); padding: 2px 8px; border-radius: 4px; }
-        .pub-links a:hover { background: var(--primary); color: #fff; }
 
-        /* RESUME STYLE */
-        .job-header { display: flex; justify-content: space-between; align-items: baseline; }
-        .job-date { color: #777; font-size: 0.9em; }
-        ul.job-details { margin-top: 5px; padding-left: 20px; color: #444; font-size: 0.95em; }
-        
-        /* MOBILE RESPONSIVE */
-        @media (max-width: 768px) {
-            body { flex-direction: column; }
-            .sidebar { width: 100%; position: relative; height: auto; border-right: none; border-bottom: 1px solid var(--border); padding: 20px; }
-            .main-content { margin-left: 0; padding: 20px; }
-            .job-header { flex-direction: column; }
+        [data-theme="dark"] {
+            /* Dark Mode */
+            --bg-color: #1e1e2e;
+            --text-color: #dcdde1;
+            --sidebar-bg: #161622;
+            --accent: #a29bfe;
+            --accent-hover: #b8b2ff;
+            --card-bg: #2d2d44;
+            --border-color: #40405c;
+            --shadow: 4px 4px 0px rgba(0,0,0,0.3);
+            --shadow-hover: 6px 6px 0px rgba(162, 155, 254, 0.2);
+            --path-color: #57606f;
+            --tag-bg: #373752;
         }
+
+        * { box-sizing: border-box; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
         
+        body {
+            font-family: var(--body-font);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: 280px;
+            background: var(--sidebar-bg);
+            border-right: 2px dashed var(--border-color);
+            padding: 30px 20px;
+            position: fixed;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 100;
+            overflow-y: auto;
+        }
+
+        .profile-img-container {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            padding: 5px;
+            border: 2px dashed var(--accent);
+            margin-bottom: 15px;
+            position: relative;
+            flex-shrink: 0;
+            background: var(--card-bg);
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        h1 { font-family: var(--sketch-font); font-size: 2rem; margin: 0; color: var(--accent); text-align: center; line-height: 1; }
+        .role { font-size: 0.85rem; color: var(--text-color); opacity: 0.8; text-align: center; margin-bottom: 20px; font-weight: 300; margin-top: 5px; }
+
+        /* Navigation Buttons */
+        .nav-menu { width: 100%; display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+        .nav-btn {
+            background: none;
+            border: none;
+            width: 100%;
+            padding: 12px 15px;
+            text-align: left;
+            font-family: var(--sketch-font);
+            font-size: 1.2rem;
+            color: var(--text-color);
+            cursor: pointer;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            opacity: 0.7;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:hover, .nav-btn.active { 
+            background-color: var(--card-bg); 
+            color: var(--accent); 
+            opacity: 1;
+            box-shadow: var(--shadow);
+            transform: translateX(5px);
+        }
+
+        .contact-row { display: flex; gap: 10px; margin-top: auto; margin-bottom: 15px; }
+        .contact-icon { color: var(--text-color); font-size: 1.2rem; opacity: 0.6; transition: 0.2s; }
+        .contact-icon:hover { color: var(--accent); opacity: 1; transform: scale(1.1); }
+
+        .cv-btn {
+            background-color: var(--accent);
+            color: #fff !important; /* Force white text */
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 10px rgba(108, 92, 231, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            transition: transform 0.2s;
+        }
+        .cv-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(108, 92, 231, 0.5); }
+
+        /* --- MAIN CONTENT --- */
+        .main {
+            margin-left: 280px;
+            padding: 40px 60px;
+            flex: 1;
+            position: relative;
+        }
+
+        /* --- THEME TOGGLE --- */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            font-size: 1.1rem;
+            color: var(--text-color);
+            z-index: 200;
+        }
+
+        /* --- SECTIONS ANIMATION --- */
+        .section { display: none; opacity: 0; animation: fadeIn 0.4s forwards; }
+        .section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- HEADINGS --- */
+        h2 { 
+            font-family: var(--sketch-font); 
+            font-size: 2.4rem; 
+            margin-bottom: 25px; 
+            color: var(--accent);
+            display: inline-block;
+            border-bottom: 3px solid var(--border-color);
+        }
+
+        /* --- ABOUT SECTION --- */
+        .hero-box {
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+        .hero-text { font-size: 1.05rem; line-height: 1.8; margin-bottom: 15px; }
+        .interest-bubbles { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px; }
+        .bubble {
+            background: var(--tag-bg);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-family: var(--sketch-font);
+            font-size: 1.1rem;
+            border: 1px dashed var(--accent);
+            color: var(--text-color);
+            cursor: default;
+            transition: 0.3s;
+        }
+        .bubble:hover { background: var(--accent); color: white; border-style: solid; transform: rotate(-2deg) scale(1.05); }
+
+        /* --- SKILLS SECTION --- */
+        .skill-category { margin-bottom: 30px; }
+        .skill-title { font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; font-size: 1.1rem; }
+        .skill-title i { color: var(--accent); }
+        .skill-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+        .skill-tag {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.05);
+            transition: 0.2s;
+        }
+        .skill-tag:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow); color: var(--accent); }
+
+        /* --- JOURNEY (Animated Map) --- */
+        .journey-map { position: relative; max-width: 800px; margin-left: 10px; border-left: 3px dashed var(--path-color); padding-left: 40px; }
+        .node-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            position: relative;
+            transition: 0.3s;
+        }
+        .node-card:hover { transform: translateX(5px); box-shadow: var(--shadow-hover); border-color: var(--accent); }
+        .node-point {
+            position: absolute; left: -54px; top: 20px; width: 24px; height: 24px;
+            background: var(--bg-color); border: 3px solid var(--accent); border-radius: 50%;
+            z-index: 2;
+        }
+        .node-header img { width: 40px; height: 40px; object-fit: contain; border-radius: 4px; background: white; border: 1px solid #eee; margin-right: 15px; }
+        .node-title { font-family: var(--sketch-font); font-size: 1.4rem; margin: 0; }
+        .node-date { font-size: 0.8rem; color: var(--accent); font-weight: 700; text-transform: uppercase; }
+        .node-desc { font-size: 0.95rem; margin-top: 10px; opacity: 0.9; }
+
+        /* --- PAPERS (Filterable) --- */
+        .filter-bar { margin-bottom: 25px; display: flex; gap: 10px; flex-wrap: wrap; }
+        .filter-btn {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            padding: 6px 14px; border-radius: 20px; cursor: pointer;
+            font-family: var(--sketch-font); font-size: 1.1rem;
+            color: var(--text-color); transition: 0.2s;
+        }
+        .filter-btn:hover, .filter-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+        
+        .pub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .pub-card {
+            background: var(--card-bg); border: 2px solid var(--border-color);
+            border-radius: 12px; padding: 20px; box-shadow: var(--shadow);
+            display: flex; flex-direction: column; height: 100%; transition: 0.3s;
+        }
+        .pub-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); border-color: var(--accent); }
+        .pub-tag { font-size: 0.75rem; background: var(--tag-bg); padding: 3px 8px; border-radius: 4px; display: inline-block; margin-bottom: 8px; color: var(--accent); font-weight: 600; }
+
+        /* --- AWARDS (Trophy Shelf) --- */
+        .award-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .award-card {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            padding: 20px; border-radius: 12px; text-align: center;
+            box-shadow: var(--shadow); transition: 0.3s;
+        }
+        .award-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+        .award-icon { font-size: 2rem; color: #f1c40f; margin-bottom: 10px; }
+        .award-title { font-weight: 700; margin-bottom: 5px; }
+        .award-date { font-size: 0.8rem; opacity: 0.6; }
+
+        /* Mobile */
+        @media (max-width: 850px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; position: relative; border-right: none; border-bottom: 2px dashed var(--border-color); padding: 20px; }
+            .main { margin-left: 0; padding: 20px; }
+            .nav-menu { flex-direction: row; overflow-x: auto; padding-bottom: 5px; }
+            .nav-btn { width: auto; white-space: nowrap; font-size: 1rem; }
+            .journey-map { margin-left: 0; padding-left: 20px; border-left-width: 2px; }
+            .node-point { left: -32px; width: 20px; height: 20px; top: 22px; }
+        }
     </style>
 </head>
 <body>
 
-    <aside class="sidebar">
-        <img src="profile.jpg" alt="Rahul Kumar" class="profile-pic" onerror="this.src='https://ui-avatars.com/api/?name=Rahul+Kumar&background=0D8ABC&color=fff&size=150'">
-        
-        <div class="name">Rahul Kumar</div>
-        <div class="title">Sr. AI Engineer<br>IIT Bhubaneswar Alum</div>
-        
-        <div class="contact-info">
-            <a href="mailto:rahulkr31.01@gmail.com">📧 rahulkr31.01@gmail.com</a>
-            <a href="https://www.linkedin.com/in/kr-rahul" target="_blank">🔗 LinkedIn Profile</a>
-            <a href="https://github.com/rahulkrbuilds" target="_blank">🐙 GitHub Profile</a>
-            <a href="https://www.researchgate.net/profile/Rahul-Kumar-74" target="_blank">🔬 ResearchGate</a>
-            <br>
-            <div style="text-align: center; margin-top: 15px;">
-                <a href="resume.pdf" target="_blank" style="background: var(--primary); color: white; padding: 10px 15px; border-radius: 5px; text-align: center; display: inline-block;">Download Full CV (PDF)</a>
-            </div>
+    <!-- THEME TOGGLE -->
+    <button class="theme-toggle" onclick="toggleTheme()" title="Switch Theme">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- SIDEBAR -->
+    <nav class="sidebar">
+        <div class="profile-img-container">
+            <!-- Replace with profile.jpg -->
+            <img src="profile.jpg" alt="Rahul" class="profile-img" onerror="this.src='https://ui-avatars.com/api/?name=Rahul+Kumar&background=a29bfe&color=fff&size=200'">
         </div>
-    </aside>
-
-    <main class="main-content">
         
-        <nav class="tabs">
-            <button class="tab-btn active" onclick="openTab(event, 'home')">Home</button>
-            <button class="tab-btn" onclick="openTab(event, 'publications')">Publications</button>
-            <button class="tab-btn" onclick="openTab(event, 'experience')">Experience & CV</button>
-        </nav>
+        <h1>Rahul Kumar</h1>
+        <p class="role">Sr. AI Engineer | Researcher</p>
 
-        <div id="home" class="tab-content active">
+        <div class="nav-menu">
+            <button class="nav-btn active" onclick="showSection('home')"><i class="fas fa-user-circle"></i> About Me</button>
+            <button class="nav-btn" onclick="showSection('skills')"><i class="fas fa-tools"></i> Skills</button>
+            <button class="nav-btn" onclick="showSection('journey')"><i class="fas fa-map-signs"></i> Journey</button>
+            <button class="nav-btn" onclick="showSection('papers')"><i class="fas fa-scroll"></i> Research</button>
+            <button class="nav-btn" onclick="showSection('awards')"><i class="fas fa-trophy"></i> Awards</button>
+        </div>
+
+        <div class="contact-row">
+            <a href="mailto:rahulkr31.01@gmail.com" class="contact-icon" title="Email"><i class="fas fa-envelope"></i></a>
+            <a href="https://www.linkedin.com/in/kr-rahul" target="_blank" class="contact-icon" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/rahulkrbuilds" target="_blank" class="contact-icon" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://www.researchgate.net/profile/Rahul-Kumar-74" target="_blank" class="contact-icon" title="ResearchGate"><i class="fas fa-book-reader"></i></a>
+        </div>
+
+        <a href="resume.pdf" class="cv-btn" download>
+            <i class="fas fa-download"></i> Download CV
+        </a>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+        
+        <!-- SECTION: ABOUT ME (HOME) -->
+        <section id="home" class="section active">
             <h2>About Me</h2>
-            <p>I am a <strong>Senior AI Engineer</strong> and Researcher with a B.Tech (Hons.) in Computer Science from <strong>IIT Bhubaneswar</strong> (GPA 9.28/10)[cite: 4, 11]. My work sits at the intersection of academic research and production-scale AI, focusing on <strong>Large Language Models (LLMs), RAG, and Ranking Systems</strong>[cite: 19].</p>
-            
-            <p>Currently, I work at <strong>Makro Pro</strong>, where I build large-scale retrieval systems that drive revenue uplift through personalized search[cite: 18, 29]. Previously, I developed GenAI onboarding assistants at <strong>GE HealthCare</strong> and founded an IoT startup, <strong>Vasitars Pvt. Ltd.</strong>[cite: 34, 75].</p>
-
-            <h3>Research Interests</h3>
-            <p>I am deeply intrigued by the concept of intelligence and building systems that capture fragments of it[cite: 17]. My core focus areas include:</p>
-            <ul>
-                <li><strong>NLP & LLMs:</strong> Retrieval Augmented Generation (RAG), PEFT-based Fine-tuning.</li>
-                <li><strong>Recommender Systems:</strong> Multi-objective reranking, Learning to Rank (LTR).</li>
-                <li><strong>Computer Vision:</strong> Medical Image Segmentation (U-Net, Attention Mechanisms).</li>
-                <li><strong>Security:</strong> Reinforcement Learning for Intrusion Detection Systems (IDS).</li>
-            </ul>
-
-            <h3>Recent News</h3>
-            <ul>
-                <li><strong>[Oct 2025]</strong> Paper on <em>LLM-LightRanker</em> accepted at <strong>ACM RecSys '25</strong>[cite: 121].</li>
-                <li><strong>[Oct 2025]</strong> Patent filed for <em>Phonetic BK-Tree Query Correction</em>[cite: 123].</li>
-                <li><strong>[Feb 2024]</strong> Work on <em>Pericardium Segmentation</em> presented at <strong>SPIE Medical Imaging</strong>[cite: 52].</li>
-            </ul>
-        </div>
-
-        <div id="publications" class="tab-content">
-            <h2>Publications</h2>
-            <p>I have published <strong>8+ papers</strong> in various AI/ML and Cyber Security journals with <strong>400+ citations</strong>[cite: 81].</p>
-
-            <h3>2025 (and Preprint)</h3>
-            
-            <div class="pub-item">
-                <div class="pub-title">LLM-LightRanker: Multi-Objective Reranking via LLM Distillation for E-Commerce</div>
-                <div class="pub-venue">ACM RecSys '25 (Accepted)</div>
-                <div class="pub-authors">R. Verma, M. Bhala, <strong>Rahul Kumar</strong>, et al.</div>
-                <div class="pub-links">
-                    <a href="#">ACM DL</a>
-                </div>
+            <div class="hero-box">
+                <p class="hero-text">
+                    I am deeply intrigued by the concept of intelligence and the possibility of building systems that capture even fragments of it. My work spans both <strong>healthcare and e-commerce AI</strong>, from developing a generative AI-based onboarding assistant at <strong>GE HealthCare</strong> to building large-scale retrieval and personalization systems at <strong>Makro Pro</strong>.
+                </p>
+                <p class="hero-text">
+                    I specialize in <strong>LLMs, RAG, and ranking systems</strong>, having fine-tuned PEFT-based LLaMA models for real-world multilingual deployments. Earlier, I contributed to deep learning solutions for cardiac risk stratification and designed secure, adaptive systems for AI-powered network security.
+                </p>
+                <p class="hero-text" style="font-style: italic; opacity: 0.8; border-top: 1px solid var(--border-color); padding-top: 15px;">
+                    "I thrive in collaborative environments where ideas evolve into elegant, empathetic solutions. One neural network at a time."
+                </p>
             </div>
 
-            <div class="pub-item">
-                <div class="pub-title">A Lightweight, Language-Aware Phonetic BK-Tree with Deep Distance Refinement</div>
-                <div class="pub-venue">ACM RecSys '25 / Patent Filed</div>
-                <div class="pub-authors">R. Verma, M. Bhala, <strong>Rahul Kumar</strong>, et al.</div>
-                <div class="pub-links">
-                    <a href="#">Patent Info</a>
-                </div>
-            </div>
-
-            <h3>2024</h3>
-
-            <div class="pub-item">
-                <div class="pub-title">Automated Pericardium-Segmentation using an Attention-based CNN</div>
-                <div class="pub-venue">SPIE Medical Imaging 2024</div>
-                <div class="pub-authors">A. Suntwal, <strong>Rahul Kumar</strong>, S. Kumar et al.</div>
-                <div class="pub-links">
-                    <a href="https://doi.org/10.1117/12.3006785">DOI Link</a>
-                </div>
-            </div>
-
-            <h3>2021</h3>
-
-            <div class="pub-item">
-                <div class="pub-title">Attention based multi-agent intrusion detection systems using reinforcement learning</div>
-                <div class="pub-venue">Journal of Information Security and Applications (JISA)</div>
-                <div class="pub-authors">K. Sethi, Y. V. Madhav, <strong>Rahul Kumar</strong>, P. Bera</div>
-                <div class="pub-links">
-                    <a href="https://linkinghub.elsevier.com/retrieve/pii/S2214212621001411">Elsevier</a>
-                </div>
-            </div>
-
-            <h3>2020</h3>
-
-            <div class="pub-item">
-                <div class="pub-title">Robust Adaptive Cloud Intrusion Detection System Using Advanced Deep RL</div>
-                <div class="pub-venue">11th Security, Privacy, and Applied Cryptography Engineering (SPACE 2020)</div>
-                <div class="pub-authors">K. Sethi, <strong>Rahul Kumar</strong>, D. Mohanty, P. Bera</div>
-                <div class="pub-links">
-                    <a href="https://link.springer.com/chapter/10.1007/978-3-030-66626-2_4">Springer</a>
-                </div>
-            </div>
-
-            <div class="pub-item">
-                <div class="pub-title">Machine Learning based Malware Detection in Cloud Environment using Clustering</div>
-                <div class="pub-venue">ICCNT 2020</div>
-                <div class="pub-authors"><strong>Rahul Kumar</strong>, K. Sethi, N. Prajapati, et al.</div>
-                <div class="pub-links">
-                    <a href="https://ieeexplore.ieee.org/document/9225627">IEEE Xplore</a>
-                </div>
-            </div>
-
-            <div class="pub-item">
-                <div class="pub-title">Deep Reinforcement Learning based Intrusion Detection System for Cloud Infrastructure</div>
-                <div class="pub-venue">COMSNETS 2020 Cybersecurity Workshop</div>
-                <div class="pub-authors">K. Sethi, <strong>Rahul Kumar</strong>, N. Prajapati, P. Bera</div>
-                <div class="pub-links">
-                    <a href="https://ieeexplore.ieee.org/document/9027452">IEEE Xplore</a>
-                </div>
-            </div>
-
-             <h3>2019</h3>
-
-            <div class="pub-item">
-                <div class="pub-title">A Context-Aware Robust Intrusion Detection System: A RL Based Approach</div>
-                <div class="pub-venue">International Journal of Information Security, Springer</div>
-                <div class="pub-authors">K.Sethi, E. S. Rupesh, <strong>Rahul Kumar</strong>, et al.</div>
-                <div class="pub-links">
-                    <a href="https://link.springer.com/article/10.1007/s10207-019-00482-7">Springer</a>
-                </div>
-            </div>
-        </div>
-
-        <div id="experience" class="tab-content">
-            <h2>Experience</h2>
-            
-            <div class="job">
-                <div class="job-header">
-                    <h3>Sr. AI Engineer | Makro Pro</h3>
-                    <span class="job-date">Aug 2024 - Present</span>
-                </div>
-                <ul class="job-details">
-                    <li>Led development of <strong>LLM-LightRanker</strong>, achieving 0.95 NDCG@5 and reducing exposure bias by 42%[cite: 29].</li>
-                    <li>Optimized search/carousel models delivering a <strong>31% revenue uplift</strong> and 56% increase in basket adds[cite: 29].</li>
-                    <li>Built anomaly detection pipelines identifying 300+ customer and 90+ product anomalies[cite: 30].</li>
-                    <li>Trained GenAI models for Thai-English content generation with 91% accuracy[cite: 31].</li>
-                </ul>
-            </div>
-
-            <div class="job">
-                <div class="job-header">
-                    <h3>Sr. AI Engineer | GE HealthCare</h3>
-                    <span class="job-date">Apr 2024 - Aug 2024</span>
-                </div>
-                <ul class="job-details">
-                    <li>Built a GenAI-based Digital Health Services (DHS) Onboarding Assistant handling 50% of user queries[cite: 38].</li>
-                    <li>Implemented a RAG + LLM stack; Fine-tuned LLAMA-3 on 5k+ QA pairs achieving 6x efficiency improvement[cite: 39, 40].</li>
-                    <li>Collaborated with the GenAI Discover team for enterprise chatbot integration[cite: 41].</li>
-                </ul>
-            </div>
-
-            <div class="job">
-                <div class="job-header">
-                    <h3>Software Engineer | GE HealthCare</h3>
-                    <span class="job-date">Oct 2022 - Mar 2024</span>
-                </div>
-                <ul class="job-details">
-                    <li>Delivered 50% improvement in DL Recon CT workflow throughput via GPU optimization[cite: 45].</li>
-                    <li>Achieved a 9/10 Net Promoter Score on onboarding satisfaction surveys[cite: 47].</li>
-                </ul>
+            <h3 style="font-family: var(--sketch-font); color: var(--accent); margin-top: 30px;">My Interest Bubble</h3>
+            <div class="interest-bubbles">
+                <span class="bubble"><i class="fas fa-brain"></i> Psychology</span>
+                <span class="bubble"><i class="fas fa-robot"></i> AI/ML</span>
+                <span class="bubble"><i class="fas fa-book-open"></i> Reading Books</span>
+                <span class="bubble"><i class="fas fa-running"></i> Running</span>
+                <span class="bubble"><i class="fas fa-laptop-code"></i> Computer Science</span>
             </div>
             
-            <div class="job">
-                <div class="job-header">
-                    <h3>Founding Engineer | Vasitars Pvt. Ltd.</h3>
-                    <span class="job-date">May 2018 - Present</span>
+            <div class="hero-box" style="margin-top: 30px; background: var(--tag-bg);">
+                <h4 style="margin: 0 0 10px 0;">Volunteer Experience</h4>
+                <p style="margin: 0; font-size: 0.95rem;">
+                    <strong>MoSahay (NGO):</strong> Developed a web portal (MEAN Stack) to connect job seekers and employees, especially for migrant laborers during critical shortages.
+                </p>
+            </div>
+        </section>
+
+
+        <!-- SECTION: SKILLS -->
+        <section id="skills" class="section">
+            <h2>Technical Arsenal</h2>
+            <p style="margin-bottom: 30px; opacity: 0.8;">A breakdown of my technical proficiency from academic roots to production scale.</p>
+
+            <div class="skill-category">
+                <div class="skill-title"><i class="fas fa-code"></i> Languages</div>
+                <div class="skill-grid">
+                    <span class="skill-tag">Python (Expert)</span>
+                    <span class="skill-tag">C++</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">SQL</span>
                 </div>
-                <ul class="job-details">
-                    <li>Developed IoT-based LPG Distribution System prototypes; raised <strong>₹7 Lakhs</strong> in initial funding[cite: 78].</li>
-                    <li>Winner of Grand India IoT Innovation Challenge (GIIOTIC)[cite: 116].</li>
-                </ul>
             </div>
 
-            <h2>Awards & Achievements</h2>
-            <ul>
-                <li><strong>Gold Prize:</strong> Inter-IIT Techmeet, IIT Roorkee (2019)[cite: 116].</li>
-                <li><strong>Winner:</strong> Grand India IoT Innovation Challenge (2018)[cite: 116].</li>
-                <li><strong>Recipient:</strong> NRDC Budding Innovators Award (2019)[cite: 116].</li>
-                <li><strong>2nd Runner Up:</strong> Smart India Hackathon (SIH), MHRD[cite: 116].</li>
-            </ul>
-        </div>
+            <div class="skill-category">
+                <div class="skill-title"><i class="fas fa-brain"></i> AI & ML Domains</div>
+                <div class="skill-grid">
+                    <span class="skill-tag">LLMs (Llama, GPT)</span>
+                    <span class="skill-tag">RAG</span>
+                    <span class="skill-tag">Deep Reinforcement Learning</span>
+                    <span class="skill-tag">Computer Vision (U-Net)</span>
+                    <span class="skill-tag">Embedding Models</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <div class="skill-title"><i class="fas fa-layer-group"></i> Frameworks & Tools</div>
+                <div class="skill-grid">
+                    <span class="skill-tag">HuggingFace</span>
+                    <span class="skill-tag">LangChain</span>
+                    <span class="skill-tag">PyTorch</span>
+                    <span class="skill-tag">TensorFlow</span>
+                    <span class="skill-tag">MLflow</span>
+                    <span class="skill-tag">FlashAttention</span>
+                    <span class="skill-tag">LoRA/PEFT</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <div class="skill-title"><i class="fas fa-server"></i> Cloud & MLOps</div>
+                <div class="skill-grid">
+                    <span class="skill-tag">Docker</span>
+                    <span class="skill-tag">Kubernetes</span>
+                    <span class="skill-tag">AWS Sagemaker</span>
+                    <span class="skill-tag">Vector DBs (Mongo/Chroma)</span>
+                    <span class="skill-tag">Helm</span>
+                </div>
+            </div>
+            
+             <div class="skill-category">
+                <div class="skill-title"><i class="fas fa-users"></i> Soft Skills</div>
+                <div class="skill-grid">
+                    <span class="skill-tag">Leadership</span>
+                    <span class="skill-tag">Communication</span>
+                    <span class="skill-tag">Customer Focus</span>
+                    <span class="skill-tag">Strategy & Analysis</span>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SECTION: JOURNEY (Map) -->
+        <section id="journey" class="section">
+            <h2>My Journey</h2>
+            
+            <div class="journey-map">
+                <!-- STOP 1 -->
+                <div class="node-card">
+                    <div class="node-point"></div>
+                    <div class="node-header" style="display: flex; align-items: center;">
+                        <img src="makro.png" onerror="this.style.display='none'">
+                        <div>
+                            <h3 class="node-title">Makro Pro</h3>
+                            <div class="node-date">Aug 2024 - Present | Sr. AI Engineer</div>
+                        </div>
+                    </div>
+                    <div class="node-desc">
+                        Built <strong>LLM-LightRanker</strong> (0.95 NDCG@5) and reduced exposure bias by 42%. Optimized search models for a <strong>31% revenue uplift</strong>.
+                    </div>
+                </div>
+
+                <!-- STOP 2 -->
+                <div class="node-card">
+                    <div class="node-point"></div>
+                    <div class="node-header" style="display: flex; align-items: center;">
+                        <img src="ge.png" onerror="this.style.display='none'">
+                        <div>
+                            <h3 class="node-title">GE HealthCare</h3>
+                            <div class="node-date">2020 - 2024 | Sr. AI Engineer & EEDP</div>
+                        </div>
+                    </div>
+                    <div class="node-desc">
+                        Built GenAI Onboarding Assistant (50% query handling). Fine-tuned Llama-3 for 6x efficiency. Optimized DL Recon CT workflows (50% throughput gain).
+                    </div>
+                </div>
+
+                <!-- STOP 3 -->
+                <div class="node-card">
+                    <div class="node-point"></div>
+                    <div class="node-header" style="display: flex; align-items: center;">
+                        <img src="vasitars.png" onerror="this.style.display='none'">
+                        <div>
+                            <h3 class="node-title">Vasitars (Founder)</h3>
+                            <div class="node-date">2018 - Present</div>
+                        </div>
+                    </div>
+                    <div class="node-desc">
+                        Prototyped IoT LPG solutions. Raised <strong>₹7 Lakhs</strong> seed funding. Winner of Grand India IoT Innovation Challenge.
+                    </div>
+                </div>
+
+                <!-- STOP 4 -->
+                <div class="node-card">
+                    <div class="node-point"></div>
+                    <div class="node-header" style="display: flex; align-items: center;">
+                        <img src="iit.png" onerror="this.style.display='none'">
+                        <div>
+                            <h3 class="node-title">IIT Bhubaneswar</h3>
+                            <div class="node-date">2016 - 2020 | B.Tech (Hons) CS</div>
+                        </div>
+                    </div>
+                    <div class="node-desc">
+                        GPA: 9.28/10. Gold Prize at Inter-IIT Techmeet. NRDC Budding Innovators Award.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SECTION: PAPERS -->
+        <section id="papers" class="section">
+            <h2>Research Library</h2>
+            <p style="margin-bottom: 20px;">10 Papers | 500+ Citations | 10k+ Reads</p>
+            
+            <div class="filter-bar">
+                <button class="filter-btn active" onclick="filterPapers('all')">All</button>
+                <button class="filter-btn" onclick="filterPapers('nlp')">NLP/LLMs</button>
+                <button class="filter-btn" onclick="filterPapers('medical')">Medical AI</button>
+                <button class="filter-btn" onclick="filterPapers('security')">Security & RL</button>
+            </div>
+
+            <div class="pub-grid">
+                <!-- 1. NLP -->
+                <div class="pub-card" data-category="nlp">
+                    <span class="pub-tag">NLP / E-Commerce</span>
+                    <h4 style="margin: 0 0 10px 0;">A Hybrid LLM Process for Multi-Objective Reranking</h4>
+                    <p style="font-size: 0.9rem; flex-grow: 1;">ACM RecSys '25 (Patent Pending). Hybrid LLM process for multi-objective reranking in e-commerce.</p>
+                    <small>Patent Filing: 2501004476</small>
+                </div>
+
+                <!-- 2. NLP -->
+                <div class="pub-card" data-category="nlp">
+                    <span class="pub-tag">NLP / Algorithms</span>
+                    <h4 style="margin: 0 0 10px 0;">Multilingual Phonetic BK-Tree Based Spelling Correction</h4>
+                    <p style="font-size: 0.9rem; flex-grow: 1;">ACM RecSys '25 (Patent Pending). Real-time multilingual query correction process in e-commerce.</p>
+                    <small>Patent Filing: 2501004419</small>
+                </div>
+
+                <!-- 3. Medical -->
+                <div class="pub-card" data-category="medical">
+                    <span class="pub-tag">Medical AI / Vision</span>
+                    <h4 style="margin: 0 0 10px 0;">Automated Pericardium-Segmentation using Attention-CNN</h4>
+                    <p style="font-size: 0.9rem; flex-grow: 1;">SPIE Medical Imaging 2024. Attention-based CNN for automated pericardium segmentation.</p>
+                    <a href="https://doi.org/10.1117/12.3006785" target="_blank" style="color: var(--accent); font-weight: bold; text-decoration: none;">View Paper &rarr;</a>
+                </div>
+
+                <!-- 4. Security/RL -->
+                <div class="pub-card" data-category="security">
+                    <span class="pub-tag">Security / RL</span>
+                    <h4 style="margin: 0 0 10px 0;">Attention based multi-agent IDS using RL</h4>
+                    <p style="font-size: 0.9rem; flex-grow: 1;">JISA 2021. Multi-agent intrusion detection systems using reinforcement learning.</p>
+                    <a href="https://linkinghub.elsevier.com/retrieve/pii/S2214212621001411" target="_blank" style="color: var(--accent); font-weight: bold; text-decoration: none;">View Paper &rarr;</a>
+                </div>
+
+                <!-- 5. Security/RL -->
+                <div class="pub-card" data-category="security">
+                    <span class="pub-tag">Security / Cloud</span>
+                    <h4 style="margin: 0 0 10px 0;">Robust Adaptive Cloud IDS Using Deep RL</h4>
+                    <p style="font-size: 0.9rem; flex-grow: 1;">11th SPACE 2020. Adaptive cloud intrusion detection system using advanced Deep RL.</p>
+                     <a href="https://link.springer.com/chapter/10.1007/978-3-030-66626-2_4" target="_blank" style="color: var(--accent); font-weight: bold; text-decoration: none;">View Paper &rarr;</a>
+                </div>
+                
+                <!-- 6. Security/ML -->
+                 <div class="pub-card" data-category="security">
+                    <span class="pub-tag">Security / ML</span>
+                    <h4 style="margin: 0 0 10px 0;">Malware Detection using Clustering Approach</h4>
+                    <p style="font-size: 0.9rem; flex-grow: 1;">ICCNT 2020. Machine Learning based malware detection in cloud environment.</p>
+                     <a href="https://ieeexplore.ieee.org/document/9225627" target="_blank" style="color: var(--accent); font-weight: bold; text-decoration: none;">View Paper &rarr;</a>
+                </div>
+
+                <!-- 7. Security/RL -->
+                <div class="pub-card" data-category="security">
+                    <span class="pub-tag">Security / RL</span>
+                    <h4 style="margin: 0 0 10px 0;">Deep RL based IDS for Cloud Infrastructure</h4>
+                    <p style="font-size: 0.9rem; flex-grow: 1;">COMSNETS 2020. Deep Reinforcement Learning based Intrusion Detection System.</p>
+                    <a href="https://ieeexplore.ieee.org/document/9027452" target="_blank" style="color: var(--accent); font-weight: bold; text-decoration: none;">View Paper &rarr;</a>
+                </div>
+
+                <!-- 8. Security/RL -->
+                <div class="pub-card" data-category="security">
+                    <span class="pub-tag">Security / RL</span>
+                    <h4 style="margin: 0 0 10px 0;">Context-Aware Robust IDS: A RL Approach</h4>
+                    <p style="font-size: 0.9rem; flex-grow: 1;">IJIS 2018. A Context-Aware Robust Intrusion Detection System using Reinforcement Learning.</p>
+                    <a href="https://link.springer.com/article/10.1007/s10207-019-00482-7" target="_blank" style="color: var(--accent); font-weight: bold; text-decoration: none;">View Paper &rarr;</a>
+                </div>
+
+                <!-- 9. Security/ML -->
+                <div class="pub-card" data-category="security">
+                    <span class="pub-tag">Security / ML</span>
+                    <h4 style="margin: 0 0 10px 0;">Novel ML based Malware Detection</h4>
+                    <p style="font-size: 0.9rem; flex-grow: 1;">Cyber Science 2020 (Oxford). Novel ML based Malware Detection in Cloud using Clustering.</p>
+                    <a href="https://ieeexplore.ieee.org/document/8885196" target="_blank" style="color: var(--accent); font-weight: bold; text-decoration: none;">View Paper &rarr;</a>
+                </div>
+
+                <!-- 10. Security/Lightweight -->
+                <div class="pub-card" data-category="security">
+                    <span class="pub-tag">Security / IoT</span>
+                    <h4 style="margin: 0 0 10px 0;">Lightweight IDS using Benford's Law</h4>
+                    <p style="font-size: 0.9rem; flex-grow: 1;">COMSNETS 2020. Intrusion Detection System using Benford's law and Network Flow Size.</p>
+                    <a href="https://ieeexplore.ieee.org/document/9027422" target="_blank" style="color: var(--accent); font-weight: bold; text-decoration: none;">View Paper &rarr;</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: AWARDS -->
+        <section id="awards" class="section">
+            <h2>Hall of Fame</h2>
+            <div class="award-grid">
+                <div class="award-card">
+                    <div class="award-icon"><i class="fas fa-medal"></i></div>
+                    <div class="award-title">Gold Prize @ Inter-IIT Techmeet</div>
+                    <div class="award-date">Dec 2019 • IIT Roorkee</div>
+                    <p style="font-size: 0.85rem; margin-top: 5px;">Prestigious pan-IIT technical competition.</p>
+                </div>
+
+                <div class="award-card">
+                    <div class="award-icon"><i class="fas fa-lightbulb"></i></div>
+                    <div class="award-title">NRDC Budding Innovators Award</div>
+                    <div class="award-date">Mar 2019 • Govt. of India</div>
+                    <p style="font-size: 0.85rem; margin-top: 5px;">Recognized for innovation in IoT.</p>
+                </div>
+
+                <div class="award-card">
+                    <div class="award-icon"><i class="fas fa-trophy"></i></div>
+                    <div class="award-title">Winner: Grand India IoT Challenge</div>
+                    <div class="award-date">Dec 2018</div>
+                    <p style="font-size: 0.85rem; margin-top: 5px;">For Project Prajjawala (LPG Dist.).</p>
+                </div>
+
+                <div class="award-card">
+                    <div class="award-icon"><i class="fas fa-code"></i></div>
+                    <div class="award-title">2nd Runner Up @ SIH</div>
+                    <div class="award-date">Mar 2019 • MHRD</div>
+                    <p style="font-size: 0.85rem; margin-top: 5px;">Smart India Hackathon.</p>
+                </div>
+
+                <div class="award-card">
+                    <div class="award-icon"><i class="fas fa-certificate"></i></div>
+                    <div class="award-title">Honorary Mention: ACM ICPC</div>
+                    <div class="award-date">Dec 2017</div>
+                    <p style="font-size: 0.85rem; margin-top: 5px;">Onsite Contest among 250+ teams.</p>
+                </div>
+                 <div class="award-card">
+                    <div class="award-icon"><i class="fas fa-handshake"></i></div>
+                    <div class="award-title">Youth India Delegate</div>
+                    <div class="award-date">Mar 2020 • Govt. of India</div>
+                    <p style="font-size: 0.85rem; margin-top: 5px;">Ministry of Youth Affairs.</p>
+                </div>
+            </div>
+        </section>
 
     </main>
 
     <script>
-        function openTab(evt, tabName) {
-            // Hide all tab content
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].classList.remove("active");
+        // THEME TOGGLE
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.querySelector('.theme-toggle i');
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
             }
+        }
 
-            // Remove active class from buttons
-            tablinks = document.getElementsByClassName("tab-btn");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].classList.remove("active");
-            }
+        // NAVIGATION
+        function showSection(id) {
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            
+            // Highlight active button
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => {
+                if(btn.getAttribute('onclick').includes(id)) {
+                    btn.classList.add('active');
+                }
+            });
+        }
 
-            // Show the current tab and add active class to button
-            document.getElementById(tabName).classList.add("active");
-            evt.currentTarget.classList.add("active");
+        // FILTER PAPERS
+        function filterPapers(category) {
+            const papers = document.querySelectorAll('.pub-card');
+            const btns = document.querySelectorAll('.filter-btn');
+            
+            // Update buttons
+            btns.forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Filter cards
+            papers.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
         }
     </script>
-
 </body>
 </html>
