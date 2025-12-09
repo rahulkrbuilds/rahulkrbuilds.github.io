@@ -3,76 +3,286 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rahul Kumar | Sr. AI Engineer</title>
+    <title>Rahul Kumar | AI Research & Engineering</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
-        header { text-align: center; padding: 50px 0; border-bottom: 1px solid #eaeaea; }
-        h1 { margin: 0; font-size: 2.5em; }
-        .tagline { color: #666; font-size: 1.2em; margin-top: 10px; }
-        .contact-links { margin-top: 20px; }
-        .contact-links a { margin: 0 10px; text-decoration: none; color: #0366d6; font-weight: bold; }
-        section { margin-top: 40px; }
-        h2 { border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        .job, .project { margin-bottom: 20px; }
-        .job-title { font-weight: bold; font-size: 1.1em; }
-        .job-meta { color: #888; font-size: 0.9em; margin-bottom: 5px; }
-        ul { padding-left: 20px; }
-        .btn { display: inline-block; background: #28a745; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-top: 20px; }
-        .btn:hover { background: #218838; }
+        /* ACADEMIC THEME - Minimalist & Clean */
+        :root {
+            --primary: #0056b3; /* Academic Blue */
+            --text: #333;
+            --bg: #fff;
+            --sidebar: #f8f9fa;
+            --border: #e9ecef;
+        }
+        body { font-family: 'Segoe UI', Roboto, "Helvetica Neue", Arial, sans-serif; color: var(--text); line-height: 1.6; margin: 0; display: flex; min-height: 100vh; }
+        
+        /* SIDEBAR (Left Panel) */
+        .sidebar { width: 280px; background: var(--sidebar); padding: 40px 20px; border-right: 1px solid var(--border); position: fixed; height: 100%; overflow-y: auto; text-align: center; }
+        .profile-pic { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px; background-color: #ddd; }
+        .name { font-size: 1.6em; font-weight: 700; margin-bottom: 5px; color: #222; }
+        .title { font-size: 0.9em; color: #666; margin-bottom: 20px; font-weight: 500; }
+        .contact-info { font-size: 0.85em; text-align: left; margin-top: 30px; }
+        .contact-info a { color: var(--primary); text-decoration: none; display: block; margin-bottom: 8px; }
+        .contact-info a:hover { text-decoration: underline; }
+        
+        /* MAIN CONTENT (Right Panel) */
+        .main-content { margin-left: 280px; padding: 50px 60px; max-width: 900px; width: 100%; }
+        
+        /* TABS NAVIGATION */
+        .tabs { border-bottom: 2px solid var(--border); margin-bottom: 30px; }
+        .tab-btn { background: none; border: none; padding: 10px 20px; font-size: 1em; cursor: pointer; color: #666; font-weight: 600; margin-right: 10px; border-bottom: 3px solid transparent; transition: 0.3s; }
+        .tab-btn:hover { color: var(--primary); }
+        .tab-btn.active { color: var(--primary); border-bottom: 3px solid var(--primary); }
+        
+        /* CONTENT SECTIONS */
+        .tab-content { display: none; animation: fadeIn 0.3s; }
+        .tab-content.active { display: block; }
+        
+        h2 { font-size: 1.5em; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 0; color: #222; }
+        h3 { font-size: 1.1em; color: #444; margin-top: 25px; margin-bottom: 5px; }
+        
+        /* PUBLICATIONS STYLE */
+        .pub-item { margin-bottom: 20px; padding-left: 15px; border-left: 3px solid #eee; }
+        .pub-title { font-weight: 700; font-size: 1.05em; color: #000; }
+        .pub-authors { color: #555; font-size: 0.95em; }
+        .pub-venue { font-style: italic; color: #666; font-size: 0.9em; }
+        .pub-links a { font-size: 0.85em; color: var(--primary); text-decoration: none; margin-right: 10px; border: 1px solid var(--border); padding: 2px 8px; border-radius: 4px; }
+        .pub-links a:hover { background: var(--primary); color: #fff; }
+
+        /* RESUME STYLE */
+        .job-header { display: flex; justify-content: space-between; align-items: baseline; }
+        .job-date { color: #777; font-size: 0.9em; }
+        ul.job-details { margin-top: 5px; padding-left: 20px; color: #444; font-size: 0.95em; }
+        
+        /* MOBILE RESPONSIVE */
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; position: relative; height: auto; border-right: none; border-bottom: 1px solid var(--border); padding: 20px; }
+            .main-content { margin-left: 0; padding: 20px; }
+            .job-header { flex-direction: column; }
+        }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>Rahul Kumar</h1>
-    <p class="tagline">Sr. AI Engineer | IIT Bhubaneswar Alum | 7+ Publications</p>
-    <div class="contact-links">
-        <a href="mailto:rahulkr31.01@gmail.com">Email Me</a> •
-        <a href="https://www.linkedin.com/in/kr-rahul">LinkedIn</a> •
-        <a href="https://github.com/rahulkrbuilds">GitHub</a>
-    </div>
-</header>
+    <aside class="sidebar">
+        <img src="profile.jpg" alt="Rahul Kumar" class="profile-pic" onerror="this.src='https://ui-avatars.com/api/?name=Rahul+Kumar&background=0D8ABC&color=fff&size=150'">
+        
+        <div class="name">Rahul Kumar</div>
+        <div class="title">Sr. AI Engineer<br>IIT Bhubaneswar Alum</div>
+        
+        <div class="contact-info">
+            <a href="mailto:rahulkr31.01@gmail.com">📧 rahulkr31.01@gmail.com</a>
+            <a href="https://www.linkedin.com/in/kr-rahul" target="_blank">🔗 LinkedIn Profile</a>
+            <a href="https://github.com/rahulkrbuilds" target="_blank">🐙 GitHub Profile</a>
+            <a href="https://www.researchgate.net/profile/Rahul-Kumar-74" target="_blank">🔬 ResearchGate</a>
+            <br>
+            <div style="text-align: center; margin-top: 15px;">
+                <a href="resume.pdf" target="_blank" style="background: var(--primary); color: white; padding: 10px 15px; border-radius: 5px; text-align: center; display: inline-block;">Download Full CV (PDF)</a>
+            </div>
+        </div>
+    </aside>
 
-<section id="about">
-    <h2>About Me</h2>
-    <p>I am a Data Scientist and AI Engineer with 5 years of experience bridging the gap between academic research and production-grade systems. Currently building large-scale retrieval and personalization systems at <strong>Makro Pro</strong>. My expertise spans LLMs, RAG, and Ranking Systems.</p>
-</section>
+    <main class="main-content">
+        
+        <nav class="tabs">
+            <button class="tab-btn active" onclick="openTab(event, 'home')">Home</button>
+            <button class="tab-btn" onclick="openTab(event, 'publications')">Publications</button>
+            <button class="tab-btn" onclick="openTab(event, 'experience')">Experience & CV</button>
+        </nav>
 
-<section id="experience">
-    <h2>Experience</h2>
-    
-    <div class="job">
-        <div class="job-title">Sr. AI Engineer @ Makro Pro</div>
-        <div class="job-meta">Aug 2024 - Present</div>
-        <ul>
-            [cite_start]<li>Led development of <strong>LLM-LightRanker</strong>, achieving 0.95 NDCG@5 and reducing exposure bias by 42%. [cite: 29]</li>
-            [cite_start]<li>Optimized search models delivering a <strong>31% revenue uplift</strong>. [cite: 29]</li>
-            [cite_start]<li>Built anomaly detection pipelines identifying 300+ customer anomalies. [cite: 30]</li>
-        </ul>
-    </div>
+        <div id="home" class="tab-content active">
+            <h2>About Me</h2>
+            <p>I am a <strong>Senior AI Engineer</strong> and Researcher with a B.Tech (Hons.) in Computer Science from <strong>IIT Bhubaneswar</strong> (GPA 9.28/10)[cite: 4, 11]. My work sits at the intersection of academic research and production-scale AI, focusing on <strong>Large Language Models (LLMs), RAG, and Ranking Systems</strong>[cite: 19].</p>
+            
+            <p>Currently, I work at <strong>Makro Pro</strong>, where I build large-scale retrieval systems that drive revenue uplift through personalized search[cite: 18, 29]. Previously, I developed GenAI onboarding assistants at <strong>GE HealthCare</strong> and founded an IoT startup, <strong>Vasitars Pvt. Ltd.</strong>[cite: 34, 75].</p>
 
-    <div class="job">
-        <div class="job-title">Sr. AI Engineer @ GE HealthCare</div>
-        <div class="job-meta">Apr 2024 - Aug 2024</div>
-        <ul>
-            [cite_start]<li>Built a GenAI-based Onboarding Assistant handling 50% of user queries. [cite: 38]</li>
-            [cite_start]<li>Fine-tuned LLAMA-3 achieving 6x improvement in response efficiency. [cite: 40]</li>
-        </ul>
-    </div>
-</section>
+            <h3>Research Interests</h3>
+            <p>I am deeply intrigued by the concept of intelligence and building systems that capture fragments of it[cite: 17]. My core focus areas include:</p>
+            <ul>
+                <li><strong>NLP & LLMs:</strong> Retrieval Augmented Generation (RAG), PEFT-based Fine-tuning.</li>
+                <li><strong>Recommender Systems:</strong> Multi-objective reranking, Learning to Rank (LTR).</li>
+                <li><strong>Computer Vision:</strong> Medical Image Segmentation (U-Net, Attention Mechanisms).</li>
+                <li><strong>Security:</strong> Reinforcement Learning for Intrusion Detection Systems (IDS).</li>
+            </ul>
 
-<section id="research">
-    <h2>Selected Research</h2>
-    <ul>
-        [cite_start]<li><strong>LLM-LightRanker:</strong> Multi-Objective Reranking via LLM Distillation (ACM RecSys '25). [cite: 121]</li>
-        [cite_start]<li><strong>Pericardium Segmentation:</strong> Attention-based CNN model (SPIE Medical Imaging 2024). [cite: 52]</li>
-        [cite_start]<li><strong>Filed Patent:</strong> Language-Aware Phonetic BK-Tree for Multilingual Query Correction. [cite: 123]</li>
-    </ul>
-</section>
+            <h3>Recent News</h3>
+            <ul>
+                <li><strong>[Oct 2025]</strong> Paper on <em>LLM-LightRanker</em> accepted at <strong>ACM RecSys '25</strong>[cite: 121].</li>
+                <li><strong>[Oct 2025]</strong> Patent filed for <em>Phonetic BK-Tree Query Correction</em>[cite: 123].</li>
+                <li><strong>[Feb 2024]</strong> Work on <em>Pericardium Segmentation</em> presented at <strong>SPIE Medical Imaging</strong>[cite: 52].</li>
+            </ul>
+        </div>
 
-<footer style="text-align: center; margin-top: 50px; font-size: 0.8em; color: #888;">
-    <p>&copy; 2025 Rahul Kumar. Built with GitHub Pages.</p>
-</footer>
+        <div id="publications" class="tab-content">
+            <h2>Publications</h2>
+            <p>I have published <strong>8+ papers</strong> in various AI/ML and Cyber Security journals with <strong>400+ citations</strong>[cite: 81].</p>
+
+            <h3>2025 (and Preprint)</h3>
+            
+            <div class="pub-item">
+                <div class="pub-title">LLM-LightRanker: Multi-Objective Reranking via LLM Distillation for E-Commerce</div>
+                <div class="pub-venue">ACM RecSys '25 (Accepted)</div>
+                <div class="pub-authors">R. Verma, M. Bhala, <strong>Rahul Kumar</strong>, et al.</div>
+                <div class="pub-links">
+                    <a href="#">ACM DL</a>
+                </div>
+            </div>
+
+            <div class="pub-item">
+                <div class="pub-title">A Lightweight, Language-Aware Phonetic BK-Tree with Deep Distance Refinement</div>
+                <div class="pub-venue">ACM RecSys '25 / Patent Filed</div>
+                <div class="pub-authors">R. Verma, M. Bhala, <strong>Rahul Kumar</strong>, et al.</div>
+                <div class="pub-links">
+                    <a href="#">Patent Info</a>
+                </div>
+            </div>
+
+            <h3>2024</h3>
+
+            <div class="pub-item">
+                <div class="pub-title">Automated Pericardium-Segmentation using an Attention-based CNN</div>
+                <div class="pub-venue">SPIE Medical Imaging 2024</div>
+                <div class="pub-authors">A. Suntwal, <strong>Rahul Kumar</strong>, S. Kumar et al.</div>
+                <div class="pub-links">
+                    <a href="https://doi.org/10.1117/12.3006785">DOI Link</a>
+                </div>
+            </div>
+
+            <h3>2021</h3>
+
+            <div class="pub-item">
+                <div class="pub-title">Attention based multi-agent intrusion detection systems using reinforcement learning</div>
+                <div class="pub-venue">Journal of Information Security and Applications (JISA)</div>
+                <div class="pub-authors">K. Sethi, Y. V. Madhav, <strong>Rahul Kumar</strong>, P. Bera</div>
+                <div class="pub-links">
+                    <a href="https://linkinghub.elsevier.com/retrieve/pii/S2214212621001411">Elsevier</a>
+                </div>
+            </div>
+
+            <h3>2020</h3>
+
+            <div class="pub-item">
+                <div class="pub-title">Robust Adaptive Cloud Intrusion Detection System Using Advanced Deep RL</div>
+                <div class="pub-venue">11th Security, Privacy, and Applied Cryptography Engineering (SPACE 2020)</div>
+                <div class="pub-authors">K. Sethi, <strong>Rahul Kumar</strong>, D. Mohanty, P. Bera</div>
+                <div class="pub-links">
+                    <a href="https://link.springer.com/chapter/10.1007/978-3-030-66626-2_4">Springer</a>
+                </div>
+            </div>
+
+            <div class="pub-item">
+                <div class="pub-title">Machine Learning based Malware Detection in Cloud Environment using Clustering</div>
+                <div class="pub-venue">ICCNT 2020</div>
+                <div class="pub-authors"><strong>Rahul Kumar</strong>, K. Sethi, N. Prajapati, et al.</div>
+                <div class="pub-links">
+                    <a href="https://ieeexplore.ieee.org/document/9225627">IEEE Xplore</a>
+                </div>
+            </div>
+
+            <div class="pub-item">
+                <div class="pub-title">Deep Reinforcement Learning based Intrusion Detection System for Cloud Infrastructure</div>
+                <div class="pub-venue">COMSNETS 2020 Cybersecurity Workshop</div>
+                <div class="pub-authors">K. Sethi, <strong>Rahul Kumar</strong>, N. Prajapati, P. Bera</div>
+                <div class="pub-links">
+                    <a href="https://ieeexplore.ieee.org/document/9027452">IEEE Xplore</a>
+                </div>
+            </div>
+
+             <h3>2019</h3>
+
+            <div class="pub-item">
+                <div class="pub-title">A Context-Aware Robust Intrusion Detection System: A RL Based Approach</div>
+                <div class="pub-venue">International Journal of Information Security, Springer</div>
+                <div class="pub-authors">K.Sethi, E. S. Rupesh, <strong>Rahul Kumar</strong>, et al.</div>
+                <div class="pub-links">
+                    <a href="https://link.springer.com/article/10.1007/s10207-019-00482-7">Springer</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="experience" class="tab-content">
+            <h2>Experience</h2>
+            
+            <div class="job">
+                <div class="job-header">
+                    <h3>Sr. AI Engineer | Makro Pro</h3>
+                    <span class="job-date">Aug 2024 - Present</span>
+                </div>
+                <ul class="job-details">
+                    <li>Led development of <strong>LLM-LightRanker</strong>, achieving 0.95 NDCG@5 and reducing exposure bias by 42%[cite: 29].</li>
+                    <li>Optimized search/carousel models delivering a <strong>31% revenue uplift</strong> and 56% increase in basket adds[cite: 29].</li>
+                    <li>Built anomaly detection pipelines identifying 300+ customer and 90+ product anomalies[cite: 30].</li>
+                    <li>Trained GenAI models for Thai-English content generation with 91% accuracy[cite: 31].</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <h3>Sr. AI Engineer | GE HealthCare</h3>
+                    <span class="job-date">Apr 2024 - Aug 2024</span>
+                </div>
+                <ul class="job-details">
+                    <li>Built a GenAI-based Digital Health Services (DHS) Onboarding Assistant handling 50% of user queries[cite: 38].</li>
+                    <li>Implemented a RAG + LLM stack; Fine-tuned LLAMA-3 on 5k+ QA pairs achieving 6x efficiency improvement[cite: 39, 40].</li>
+                    <li>Collaborated with the GenAI Discover team for enterprise chatbot integration[cite: 41].</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <h3>Software Engineer | GE HealthCare</h3>
+                    <span class="job-date">Oct 2022 - Mar 2024</span>
+                </div>
+                <ul class="job-details">
+                    <li>Delivered 50% improvement in DL Recon CT workflow throughput via GPU optimization[cite: 45].</li>
+                    <li>Achieved a 9/10 Net Promoter Score on onboarding satisfaction surveys[cite: 47].</li>
+                </ul>
+            </div>
+            
+            <div class="job">
+                <div class="job-header">
+                    <h3>Founding Engineer | Vasitars Pvt. Ltd.</h3>
+                    <span class="job-date">May 2018 - Present</span>
+                </div>
+                <ul class="job-details">
+                    <li>Developed IoT-based LPG Distribution System prototypes; raised <strong>₹7 Lakhs</strong> in initial funding[cite: 78].</li>
+                    <li>Winner of Grand India IoT Innovation Challenge (GIIOTIC)[cite: 116].</li>
+                </ul>
+            </div>
+
+            <h2>Awards & Achievements</h2>
+            <ul>
+                <li><strong>Gold Prize:</strong> Inter-IIT Techmeet, IIT Roorkee (2019)[cite: 116].</li>
+                <li><strong>Winner:</strong> Grand India IoT Innovation Challenge (2018)[cite: 116].</li>
+                <li><strong>Recipient:</strong> NRDC Budding Innovators Award (2019)[cite: 116].</li>
+                <li><strong>2nd Runner Up:</strong> Smart India Hackathon (SIH), MHRD[cite: 116].</li>
+            </ul>
+        </div>
+
+    </main>
+
+    <script>
+        function openTab(evt, tabName) {
+            // Hide all tab content
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+
+            // Remove active class from buttons
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+
+            // Show the current tab and add active class to button
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
 
 </body>
 </html>
